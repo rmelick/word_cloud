@@ -509,7 +509,7 @@ class WordCloud(object):
 
         flags = (re.UNICODE if sys.version < '3' and type(text) is unicode
                  else 0)
-        regexp = self.regexp if self.regexp is not None else r"[^\s](?:[^\s]|['])*"
+        regexp = self.regexp if self.regexp is not None else r"(?:\w[\w']+)|(?:[^\s])"
 
         words = re.findall(regexp, text, flags)
         # remove stopwords
