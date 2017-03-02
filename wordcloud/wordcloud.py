@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Author: Andreas Christian Mueller <t3kcit@gmail.com>
 #
 # (c) 2012
@@ -12,6 +13,7 @@ from random import Random
 import os
 import re
 import sys
+import string
 import colorsys
 import numpy as np
 from operator import itemgetter
@@ -435,7 +437,7 @@ class WordCloud(object):
                 transposed_font = ImageFont.TransposedFont(
                     font, orientation=orientation)
                 # get size of resulting text
-                print(u"drawing {0}".format(word))
+                #print(u"drawing {0}".format(word))
                 box_size = draw.textsize(word, font=transposed_font)
                 # find possible places using integral image:
                 result = occupancy.sample_position(box_size[1] + self.margin,
@@ -509,9 +511,20 @@ class WordCloud(object):
 
         flags = (re.UNICODE if sys.version < '3' and type(text) is unicode
                  else 0)
-        regexp = self.regexp if self.regexp is not None else r"(?:\w[\w']+)|(?:[^\s])"
 
+        # the regex used to detect words is a combination of several types
+        # 2+ consecutive letters (also include apostrophes), e.x It's
+        normal_word = r"(?:\w[\w']+)"
+        # 2+ consecutive punctuations, e.x. :)
+        ascii_art = r"(?:[{punctuation}][{punctuation}]+)".format(punctuation=string.punctuation)
+        # a single character that is not alpha_numeric or other ascii printable
+        emoji = r"(?:[^\s])(?<![\w{ascii_printable}])".format(ascii_printable=string.printable)
+        default_regex = r"{normal_word}|{ascii_art}|{emoji}".format(normal_word=normal_word, ascii_art=ascii_art,
+                                                                    emoji=emoji)
+
+        regexp = self.regexp if self.regexp is not None else default_regex
         words = re.findall(regexp, text, flags)
+
         # remove stopwords
         words = [word for word in words if word.lower() not in stopwords]
         # remove 's
