@@ -4,17 +4,17 @@ Minimal Example
 ===============
 Generating a square wordcloud from the US constitution using default arguments.
 """
-
+import io
 from os import path
 from wordcloud import WordCloud
 
 d = path.dirname(__file__)
 
 # Read the whole text.
-text = open(path.join(d, 'simple-emoji.txt')).read()
+text = io.open(path.join(d, 'simple-emoji.txt')).read()
 
 # Generate a word cloud image
-wordcloud = WordCloud(font_path="/System/Library/Fonts/Apple Color Emoji.ttc").generate(text)
+wordcloud = WordCloud(font_path="/home/rmelick/Downloads/fonts/Symbola.ttf").generate(text)
 
 # Display the generated image:
 # the matplotlib way:

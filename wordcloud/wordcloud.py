@@ -426,7 +426,7 @@ class WordCloud(object):
                 orientation = None
             else:
                 orientation = Image.ROTATE_90
-            font_size = 160
+            #font_size = 160
             tried_other_orientation = False
             while True:
                 # try to find a position
@@ -435,6 +435,7 @@ class WordCloud(object):
                 transposed_font = ImageFont.TransposedFont(
                     font, orientation=orientation)
                 # get size of resulting text
+                print(u"drawing {0}".format(word))
                 box_size = draw.textsize(word, font=transposed_font)
                 # find possible places using integral image:
                 result = occupancy.sample_position(box_size[1] + self.margin,
@@ -450,7 +451,7 @@ class WordCloud(object):
                                    Image.ROTATE_90)
                     tried_other_orientation = True
                 else:
-                    #font_size -= self.font_step
+                    font_size -= self.font_step
                     orientation = None
 
             if font_size < self.min_font_size:
@@ -508,7 +509,7 @@ class WordCloud(object):
 
         flags = (re.UNICODE if sys.version < '3' and type(text) is unicode
                  else 0)
-        regexp = self.regexp if self.regexp is not None else r"\S[\S']+"
+        regexp = self.regexp if self.regexp is not None else r"[^\s](?:[^\s]|['])*"
 
         words = re.findall(regexp, text, flags)
         # remove stopwords
@@ -518,8 +519,6 @@ class WordCloud(object):
                  for word in words]
         # remove numbers
         words = [word for word in words if not word.isdigit()]
-        # remove empties
-        words = [word for word in words if not word.is()]
 
         if self.collocations:
             word_counts = unigrams_and_bigrams(words, self.normalize_plurals)
