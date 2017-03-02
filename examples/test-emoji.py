@@ -16,7 +16,7 @@ for emojiString in fileLines:
     print(emojiString)
 
 text = "".join(fileLines)
-regexp = r"\w[\w']+"
+regexp = r"\S[\S']+"
 flags = (re.UNICODE if sys.version < '3' and type(text) is unicode
                  else 0)
 print("combined text is")

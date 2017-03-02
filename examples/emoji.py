@@ -11,10 +11,10 @@ from wordcloud import WordCloud
 d = path.dirname(__file__)
 
 # Read the whole text.
-text = open(path.join(d, 'emoji-only.txt')).read()
+text = open(path.join(d, 'simple-emoji.txt')).read()
 
 # Generate a word cloud image
-wordcloud = WordCloud().generate(text)
+wordcloud = WordCloud(font_path="/System/Library/Fonts/Apple Color Emoji.ttc").generate(text)
 
 # Display the generated image:
 # the matplotlib way:
