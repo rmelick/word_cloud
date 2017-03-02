@@ -11,10 +11,10 @@ from wordcloud import WordCloud
 d = path.dirname(__file__)
 
 # Read the whole text.
-text = io.open(path.join(d, 'simple-emoji.txt')).read()
+text = io.open('/home/rmelick/Downloads/chat.txt').read()
 
 # Generate a word cloud image
-wordcloud = WordCloud(font_path="/home/rmelick/Downloads/fonts/Symbola.ttf").generate(text)
+wordcloud = WordCloud(font_path="/home/rmelick/Downloads/fonts/Symbola.ttf",  width=1200, height=600).generate(text)
 
 # Display the generated image:
 # the matplotlib way:
@@ -23,7 +23,7 @@ plt.imshow(wordcloud)
 plt.axis("off")
 
 # lower max_font_size
-wordcloud = WordCloud(max_font_size=40).generate(text)
+wordcloud = WordCloud(font_path="/home/rmelick/Downloads/fonts/Symbola.ttf", max_font_size=40).generate(text)
 plt.figure()
 plt.imshow(wordcloud)
 plt.axis("off")
