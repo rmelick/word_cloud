@@ -11,7 +11,7 @@ from wordcloud import WordCloud
 d = path.dirname(__file__)
 
 # Read the whole text.
-text = io.open('/home/rmelick/Downloads/chat.txt').read()
+text = io.open(path.join(d, 'happy-emoji.txt')).read()
 
 # Generate a word cloud image
 wordcloud = WordCloud(font_path="/home/rmelick/Downloads/fonts/Symbola.ttf",  width=1200, height=600).generate(text)
